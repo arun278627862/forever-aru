@@ -81,9 +81,37 @@ const CONFIG = {
   GALLERY_PHOTOS: [
     {
       src: "assets/photos/first-meeting-4feb.jpg",
-      caption: "Hamari Pehli Mulaqat ❤️",
+      caption: "1. Hamari Pehli Mulaqat ❤️",
       category: "couple",
       description: "04 February 2026 — Woh botanical garden ka din jahan se hamara safar shuru hua.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/2-dusri-mulaqat.jpg",
+      caption: "2. Dusri Mulaqat — Parivaar & Khushiyan 🌸",
+      category: "couple",
+      description: "Dusri mulaqat ke pyare pal — pure parivaar ke aashirwaad aur muskan ke sang.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/3-sagai-stage.jpg",
+      caption: "3. 3rd Time — Sagai Ceremony Stage 💍",
+      category: "couple",
+      description: "Sagai ke shahi pal stage par, ek doosre ke hamesha ke liye ho gaye.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/4-bike-ride.jpg",
+      caption: "4. 4th Time — Hawaon Ke Sang Bike Ride 🏍️",
+      category: "couple",
+      description: "Bike ride par thandi hawayein aur kandhe par sar rakh kar muskurana.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/5-dhoop-chaon.jpg",
+      caption: "5. 5th Time — Dhoop-Chaon Couple Selfie ☀️",
+      category: "couple",
+      description: "Dhoop-chaon ki pyari si selfie, zindagi ke har mod par saath chalne ka vaada.",
       isPortrait: true
     },
     {
@@ -208,9 +236,10 @@ class AmbientParticleEngine {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     if (!this.canvas) return;
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d', { alpha: true });
     this.particles = [];
-    this.maxParticles = window.innerWidth < 768 ? 24 : 45;
+    const isMobile = window.innerWidth < 768;
+    this.maxParticles = isMobile ? 16 : 28;
     this.animationFrameId = null;
     this.isPaused = false;
     this.burstParticlesList = [];
@@ -220,7 +249,11 @@ class AmbientParticleEngine {
 
   init() {
     this.resize();
-    window.addEventListener('resize', () => this.resize());
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => this.resize(), 150);
+    }, { passive: true });
     
     // Create initial pool of ambient particles
     for (let i = 0; i < this.maxParticles; i++) {
@@ -230,7 +263,9 @@ class AmbientParticleEngine {
     // Handle visibility change to save CPU / battery
     document.addEventListener('visibilitychange', () => {
       this.isPaused = document.hidden;
-      if (!this.isPaused) this.loop();
+      if (!this.isPaused && !this.animationFrameId) {
+        this.loop();
+      }
     });
 
     this.loop();
@@ -247,30 +282,28 @@ class AmbientParticleEngine {
       type: isPetal ? 'petal' : 'heart',
       x: Math.random() * this.canvas.width,
       y: randomY ? Math.random() * this.canvas.height : this.canvas.height + 20,
-      size: isPetal ? (10 + Math.random() * 12) : (12 + Math.random() * 14),
-      speedY: isPetal ? (0.6 + Math.random() * 0.9) : -(0.5 + Math.random() * 1.0), // Petals fall down, hearts rise up
-      speedX: (Math.random() - 0.5) * 0.8,
+      size: isPetal ? (9 + Math.random() * 9) : (10 + Math.random() * 11),
+      speedY: isPetal ? (0.5 + Math.random() * 0.7) : -(0.4 + Math.random() * 0.8), // Petals fall down, hearts rise up
+      speedX: (Math.random() - 0.5) * 0.6,
       rotation: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 2,
-      opacity: 0.3 + Math.random() * 0.5,
-      hue: isPetal ? (345 + Math.random() * 20) : (340 + Math.random() * 25)
+      rotSpeed: (Math.random() - 0.5) * 1.5,
+      opacity: 0.35 + Math.random() * 0.45
     };
   }
 
-  triggerBurst(x, y, count = 25) {
+  triggerBurst(x, y, count = 18) {
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = 2 + Math.random() * 6;
+      const speed = 2 + Math.random() * 5;
       this.burstParticlesList.push({
-        type: Math.random() > 0.3 ? 'heart' : 'sparkle',
+        type: Math.random() > 0.35 ? 'heart' : 'sparkle',
         x: x || window.innerWidth / 2,
         y: y || window.innerHeight / 2,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        size: 8 + Math.random() * 14,
+        size: 7 + Math.random() * 10,
         opacity: 1,
-        life: 1,
-        decay: 0.015 + Math.random() * 0.02
+        decay: 0.02 + Math.random() * 0.025
       });
     }
   }
@@ -280,8 +313,6 @@ class AmbientParticleEngine {
     ctx.translate(x, y);
     ctx.scale(size / 30, size / 30);
     ctx.fillStyle = `rgba(239, 35, 60, ${opacity})`;
-    ctx.shadowColor = 'rgba(255, 107, 129, 0.6)';
-    ctx.shadowBlur = 8;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.bezierCurveTo(-15, -15, -25, 5, 0, 25);
@@ -305,10 +336,8 @@ class AmbientParticleEngine {
     ctx.save();
     ctx.translate(x, y);
     ctx.fillStyle = `rgba(243, 208, 140, ${opacity})`;
-    ctx.shadowColor = 'rgba(229, 185, 124, 0.8)';
-    ctx.shadowBlur = 6;
     ctx.beginPath();
-    ctx.arc(0, 0, size * 0.3, 0, Math.PI * 2);
+    ctx.arc(0, 0, size * 0.35, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -569,19 +598,25 @@ class GalleryController {
   }
 
   attachTilt(card) {
-    if (window.matchMedia('(hover: hover)').matches) {
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let rafId = null;
       card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -8;
-        const rotateY = ((x - centerX) / centerX) * 8;
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-      });
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -6;
+          const rotateY = ((x - centerX) / centerX) * 6;
+          card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.02)`;
+          rafId = null;
+        });
+      }, { passive: true });
 
       card.addEventListener('mouseleave', () => {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
       });
     }
@@ -649,11 +684,26 @@ class Lightbox {
   update() {
     const photo = this.photos[this.currentIndex];
     if (!photo) return;
-    this.img.src = photo.src;
-    this.img.alt = photo.caption;
-    this.caption.textContent = photo.caption;
-    this.desc.textContent = photo.description || '';
-    this.counter.textContent = `${this.currentIndex + 1} / ${this.photos.length}`;
+
+    if (this.img) {
+      this.img.classList.add('switching');
+      const tempImg = new Image();
+      tempImg.onload = () => {
+        this.img.src = photo.src;
+        this.img.alt = photo.caption;
+        this.img.classList.remove('switching');
+      };
+      tempImg.src = photo.src;
+    }
+    if (this.caption) this.caption.textContent = photo.caption;
+    if (this.desc) this.desc.textContent = photo.description || '';
+    if (this.counter) this.counter.textContent = `${this.currentIndex + 1} / ${this.photos.length}`;
+
+    // Preload next and previous images for instant touch-navigation
+    const nextIdx = (this.currentIndex + 1) % this.photos.length;
+    const prevIdx = (this.currentIndex - 1 + this.photos.length) % this.photos.length;
+    if (this.photos[nextIdx]) { const i1 = new Image(); i1.src = this.photos[nextIdx].src; }
+    if (this.photos[prevIdx]) { const i2 = new Image(); i2.src = this.photos[prevIdx].src; }
   }
 
   bindEvents() {
