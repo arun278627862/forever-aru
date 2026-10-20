@@ -1586,6 +1586,132 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+   12.5 Section: Arun's Favorite — Scratch Card Experience
+   -------------------------------------------------------------------------- */
+.favorite-section {
+  padding: 4rem 1.5rem;
+}
+
+.scratch-card-container {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 2.2rem 1.5rem 1.8rem;
+  border-color: var(--glass-border-gold);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(229, 185, 124, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scratch-card-badge {
+  display: inline-block;
+  padding: 5px 16px;
+  background: linear-gradient(135deg, rgba(239, 35, 60, 0.25) 0%, rgba(229, 185, 124, 0.25) 100%);
+  border: 1px solid var(--color-gold-champagne);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-gold-bright);
+  margin-bottom: 1.5rem;
+}
+
+.scratch-card-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 3 / 4;
+  height: 440px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--color-gold-champagne);
+  background: #120205;
+  touch-action: none; /* Crucial for smooth touch scratch without page scrolling */
+  user-select: none;
+}
+
+.scratch-revealed-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  z-index: 1;
+}
+
+.scratch-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.scratch-photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 1rem 0.8rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 1, 3, 0.95) 100%);
+  color: #fff;
+  text-align: center;
+}
+
+.scratch-photo-caption h3 {
+  font-size: 1.45rem;
+  color: var(--color-gold-bright);
+  margin-bottom: 2px;
+}
+
+.scratch-photo-caption p {
+  font-size: 0.82rem;
+  color: var(--color-blush-soft);
+}
+
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.scratch-canvas.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scratch-status {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.scratch-hint-text {
+  font-size: 0.88rem;
+  color: var(--color-gold-champagne);
+  animation: pulseHint 2s infinite;
+}
+
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@media (max-width: 480px) {
+  .scratch-card-wrap {
+    height: 400px;
+    max-width: 290px;
+  }
+}
+
+/* --------------------------------------------------------------------------
    13. Section: Photo Gallery (Polaroid Masonry)
    -------------------------------------------------------------------------- */
 .gallery-filter-tabs {

@@ -459,6 +459,45 @@
       </div>
     </section>
 
+    <!-- SECTION 3.5: ARUN'S FAVORITE SECTION — SCRATCH TO REVEAL (31.jpeg) -->
+    <section class="romantic-section favorite-section" id="favoriteSection">
+      <div class="section-container text-center">
+        <div class="section-header">
+          <span class="section-pill">Arun's Favorite ❤️</span>
+          <h2 class="section-title font-serif">Aru — My Forever Queen 👑</h2>
+          <p class="section-subtitle">Finger se scratch karke dekhiye meri sabse favourite tasveer!</p>
+        </div>
+
+        <div class="scratch-card-container glass-panel">
+          <div class="scratch-card-badge">
+            <span>✨ Tap & Scratch To Reveal ✨</span>
+          </div>
+
+          <div class="scratch-card-wrap" id="scratchCardWrap">
+            <!-- Hidden Revealed Photo Behind Scratch Layer -->
+            <div class="scratch-revealed-layer" id="scratchRevealedLayer">
+              <img src="assets/photos/31.jpeg" alt="Arun's Favorite Queen - Aru" class="scratch-photo" id="scratchPhoto" loading="lazy">
+              <div class="scratch-photo-caption">
+                <h3 class="font-script">Aru — Meri Favorite Queen 👑</h3>
+                <p>Har lamha, har saans mein sirf tumhara naam hai.</p>
+              </div>
+            </div>
+
+            <!-- Interactive Canvas for Scratching -->
+            <canvas id="scratchCanvas" class="scratch-canvas" width="360" height="480"></canvas>
+          </div>
+
+          <!-- Celebration message once revealed -->
+          <div class="scratch-status" id="scratchStatus">
+            <p class="scratch-hint-text">👆 Screen par apni ungli ya cursor se scratch karein</p>
+            <button type="button" id="revealInstantlyBtn" class="btn btn-secondary btn-sm">
+              <span>Direct Reveal Karein 💫</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- SECTION 4: OUR PHOTO GALLERY (POLAROID MASONRY) -->
     <section class="romantic-section gallery-section" id="gallerySection">
       <div class="section-container">

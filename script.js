@@ -60,7 +60,8 @@ const CONFIG = {
       title: "Chaand Si Mehbooba Ho Meri ❤️",
       artist: "Mukesh • Himalay Ki Godmein",
       src: "assets/music/chaand-si-mehbooba.webm",
-      startTime: 38
+      startTime: 38,
+      endTime: 120 // Up to 2 minutes playback, then advances smoothly
     },
     {
       title: "Tujh Mein Rab Dikhta Hai ❤️",
@@ -835,6 +836,191 @@ class SurpriseMessageManager {
 }
 
 /* ----------------------------------------------------------------------------
+ * 6.5 SCRATCH TO REVEAL CARD MANAGER (Arun's Favorite — 31.jpeg)
+ * ---------------------------------------------------------------------------- */
+class ScratchCardManager {
+  constructor(canvasId, particleEngine) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext('2d');
+    this.particleEngine = particleEngine;
+    this.isDrawing = false;
+    this.isRevealed = false;
+    this.scratchedPixels = 0;
+    this.totalPixels = 0;
+    this.directRevealBtn = document.getElementById('revealInstantlyBtn');
+    this.statusText = document.querySelector('.scratch-hint-text');
+
+    this.init();
+  }
+
+  init() {
+    this.setupCanvas();
+    this.bindEvents();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!this.isRevealed) this.setupCanvas();
+      }, 150);
+    }, { passive: true });
+  }
+
+  setupCanvas() {
+    const rect = this.canvas.parentElement.getBoundingClientRect();
+    this.canvas.width = rect.width || 320;
+    this.canvas.height = rect.height || 420;
+
+    const ctx = this.ctx;
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+
+    // Draw luxurious gold-rose scratch coating
+    const grad = ctx.createLinearGradient(0, 0, w, h);
+    grad.addColorStop(0, '#d4af37');
+    grad.addColorStop(0.3, '#701424');
+    grad.addColorStop(0.7, '#2b070d');
+    grad.addColorStop(1, '#caa030');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Subtle pattern overlay
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    for (let i = 0; i < w; i += 24) {
+      for (let j = 0; j < h; j += 24) {
+        ctx.beginPath();
+        ctx.arc(i + 12, j + 12, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Centered romantic text on scratch card
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px Playfair Display, serif';
+    ctx.textAlign = 'center';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowBlur = 6;
+    ctx.fillText('✨ Aru — Secret Surprise ✨', w / 2, h / 2 - 20);
+
+    ctx.font = '14px Cormorant Garamond, serif';
+    ctx.fillStyle = '#ffd1dc';
+    ctx.fillText('Scratch with love to reveal 💖', w / 2, h / 2 + 15);
+    ctx.shadowBlur = 0;
+  }
+
+  bindEvents() {
+    const getPos = (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    };
+
+    const scratch = (e) => {
+      if (!this.isDrawing || this.isRevealed) return;
+      const pos = getPos(e);
+
+      this.ctx.globalCompositeOperation = 'destination-out';
+      this.ctx.beginPath();
+      this.ctx.arc(pos.x, pos.y, 28, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Check progress periodically
+      if (Math.random() > 0.6) {
+        this.checkScratchProgress();
+      }
+    };
+
+    // Touch events for mobile phones
+    this.canvas.addEventListener('touchstart', (e) => {
+      this.isDrawing = true;
+      scratch(e);
+    }, { passive: true });
+
+    this.canvas.addEventListener('touchmove', (e) => {
+      scratch(e);
+    }, { passive: true });
+
+    this.canvas.addEventListener('touchend', () => {
+      this.isDrawing = false;
+      this.checkScratchProgress();
+    });
+
+    // Mouse events for desktop
+    this.canvas.addEventListener('mousedown', (e) => {
+      this.isDrawing = true;
+      scratch(e);
+    });
+
+    this.canvas.addEventListener('mousemove', scratch);
+    window.addEventListener('mouseup', () => {
+      if (this.isDrawing) {
+        this.isDrawing = false;
+        this.checkScratchProgress();
+      }
+    });
+
+    // Direct Reveal Button
+    if (this.directRevealBtn) {
+      this.directRevealBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.revealCompletely();
+      });
+    }
+  }
+
+  checkScratchProgress() {
+    if (this.isRevealed) return;
+
+    try {
+      const imgData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+      const data = imgData.data;
+      let clearPixels = 0;
+      const totalSampled = data.length / 16; // sample every 4th pixel for high performance
+
+      for (let i = 3; i < data.length; i += 16) {
+        if (data[i] === 0) clearPixels++;
+      }
+
+      const percent = (clearPixels / totalSampled) * 100;
+      if (percent > 38) {
+        this.revealCompletely();
+      }
+    } catch (e) {
+      // Ignore security errors if any
+    }
+  }
+
+  revealCompletely() {
+    if (this.isRevealed) return;
+    this.isRevealed = true;
+
+    this.canvas.classList.add('fade-out');
+
+    if (this.statusText) {
+      this.statusText.innerHTML = '❤️ <strong>Meri Sabse Pyaari Queen — Aru!</strong> ✨';
+      this.statusText.style.color = '#ffccd5';
+    }
+
+    if (this.directRevealBtn) {
+      this.directRevealBtn.style.display = 'none';
+    }
+
+    // Trigger celebration hearts burst
+    if (this.particleEngine) {
+      const rect = this.canvas.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      this.particleEngine.triggerBurst(cx, cy, 35);
+    }
+  }
+}
+
+/* ----------------------------------------------------------------------------
  * 7. MAIN APP ORCHESTRATION & EVENT BINDINGS
  * ---------------------------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
@@ -847,6 +1033,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // C. Initialize Surprise Messages
   new SurpriseMessageManager(CONFIG.SURPRISE_MESSAGES, particleEngine);
+
+  // C.5 Initialize Arun's Favorite Scratch Card (31.jpeg)
+  new ScratchCardManager('scratchCanvas', particleEngine);
 
   // D. Initialize Gallery & Lightbox
   const lightbox = new Lightbox(CONFIG.GALLERY_PHOTOS);
@@ -958,11 +1147,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Auto advance to next song when current track ends (only if user hasn't paused)
+  // Auto advance to next song when current track ends or reaches specified endTime (only if user hasn't paused)
   if (audioEl) {
     audioEl.addEventListener('ended', () => {
       if (!isUserPaused) {
         playDirectBollywoodSong(currentTrackIdx + 1);
+      }
+    });
+
+    // Check custom endTime limit (e.g. up to 2 minutes for Chaand Si Mehbooba)
+    audioEl.addEventListener('timeupdate', () => {
+      const currentTrack = CONFIG.BOLLYWOOD_PLAYLIST[currentTrackIdx];
+      if (currentTrack && currentTrack.endTime && !isUserPaused && isPlaying) {
+        if (audioEl.currentTime >= currentTrack.endTime) {
+          playDirectBollywoodSong(currentTrackIdx + 1);
+        }
       }
     });
 
