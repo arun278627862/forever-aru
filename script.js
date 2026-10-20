@@ -57,15 +57,21 @@ const CONFIG = {
   // Downloaded Bollywood Romantic Soundtracks (Direct Non-Stop Play)
   BOLLYWOOD_PLAYLIST: [
     {
-      title: "Hum Tum Kitne Paas Hai ❤️",
-      artist: "Udit Narayan & Alka Yagnik",
-      src: "assets/music/hum-tum-kitne-paas.webm",
-      startTime: 0
-    },
-    {
       title: "Chaand Si Mehbooba Ho Meri ❤️",
       artist: "Mukesh • Himalay Ki Godmein",
       src: "assets/music/chaand-si-mehbooba.webm",
+      startTime: 38
+    },
+    {
+      title: "Tujh Mein Rab Dikhta Hai ❤️",
+      artist: "Roop Kumar Rathod • RNBDJ",
+      src: "assets/music/tujh-mein-rab.mp3",
+      startTime: 0
+    },
+    {
+      title: "Hum Tum Kitne Paas Hai ❤️",
+      artist: "Udit Narayan & Alka Yagnik",
+      src: "assets/music/hum-tum-kitne-paas.webm",
       startTime: 0
     },
     {
@@ -82,11 +88,6 @@ const CONFIG = {
       title: "Raataan Lambiyan ❤️",
       artist: "Jubin Nautiyal & Asees Kaur • Shershaah",
       src: "assets/music/raataan-lambiyan.mp3"
-    },
-    {
-      title: "Tujh Mein Rab Dikhta Hai ❤️",
-      artist: "Roop Kumar Rathod • RNBDJ",
-      src: "assets/music/tujh-mein-rab.mp3"
     }
   ],
 
