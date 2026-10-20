@@ -83,12 +83,14 @@ body {
     radial-gradient(circle at 10% 80%, rgba(90, 17, 30, 0.5) 0%, transparent 50%),
     radial-gradient(circle at 90% 60%, rgba(58, 8, 16, 0.6) 0%, transparent 50%),
     linear-gradient(180deg, var(--color-burgundy-darkest) 0%, #170205 100%);
-  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: var(--color-text-primary);
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Typography Helpers */
@@ -2125,6 +2127,16 @@ body {
   }
   .hero-quote {
     font-size: 1.35rem;
+  }
+  /* Low-end GPU optimization: replace expensive multi-layer backdrop blurs on small screens */
+  .glass-panel {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(30, 4, 9, 0.88);
+  }
+  .romantic-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 600px;
   }
 }
 
