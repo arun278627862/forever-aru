@@ -44,6 +44,7 @@ const CONFIG = {
 
   // Surprise Messages List
   SURPRISE_MESSAGES: [
+    "Chaand si mehbooba ho meri... Haan Aru, tum bilkul waisi ho jaisa maine socha tha! ❤️",
     "Aru, tumhari smile meri favourite hai. ❤️",
     "Pinki, tum mere din ko aur beautiful bana deti ho.",
     "Aaj bhi tumhari ek smile mera mood achha kar sakti hai.",
@@ -55,6 +56,18 @@ const CONFIG = {
 
   // Downloaded Bollywood Romantic Soundtracks (Direct Non-Stop Play)
   BOLLYWOOD_PLAYLIST: [
+    {
+      title: "Hum Tum Kitne Paas Hai ❤️",
+      artist: "Udit Narayan & Alka Yagnik",
+      src: "assets/music/hum-tum-kitne-paas.webm",
+      startTime: 0
+    },
+    {
+      title: "Chaand Si Mehbooba Ho Meri ❤️",
+      artist: "Mukesh • Himalay Ki Godmein",
+      src: "assets/music/chaand-si-mehbooba.webm",
+      startTime: 0
+    },
     {
       title: "Raabta (Male Version) ❤️",
       artist: "Arijit Singh • Agent Vinod",
@@ -883,15 +896,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Only set src and reload if it differs
     const targetSrc = track.src;
-    if (!audioEl.src || !audioEl.src.includes(targetSrc)) {
+    const needsReload = !audioEl.src || !audioEl.src.includes(targetSrc);
+    if (needsReload) {
       audioEl.src = targetSrc;
       audioEl.load();
+    }
+
+    // Direct fast start (skip long prelude/intro silence if specified)
+    if (track.startTime && audioEl.currentTime < track.startTime) {
+      audioEl.currentTime = track.startTime;
     }
 
     const promise = audioEl.play();
     if (promise !== undefined) {
       promise
         .then(() => {
+          if (track.startTime && Math.abs(audioEl.currentTime - track.startTime) > 2) {
+            audioEl.currentTime = track.startTime;
+          }
           setPlayingState(true);
         })
         .catch((err) => {
