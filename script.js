@@ -78,13 +78,6 @@ const CONFIG = {
       durationLimit: 120
     },
     {
-      title: "Hum Tum Kitne Paas Hai ❤️",
-      artist: "Udit Narayan & Alka Yagnik",
-      src: "assets/music/hum-tum-kitne-paas.webm",
-      startTime: 38,
-      durationLimit: 120
-    },
-    {
       title: "Raabta (Male Version) ❤️",
       artist: "Arijit Singh • Agent Vinod",
       src: "assets/music/raabta.mp3",
