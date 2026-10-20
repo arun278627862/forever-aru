@@ -87,6 +87,13 @@ const CONFIG = {
       isPortrait: true
     },
     {
+      src: "assets/photos/27.jpeg",
+      caption: "Forever My Love ❤️",
+      category: "couple",
+      description: "Kala shahi joda, roshan deepak, aur 'Forever My Love' — hamesha ke liye ek jaan.",
+      isPortrait: true
+    },
+    {
       src: "assets/photos/cover.jpg",
       caption: "Forever Humsafar ✨",
       category: "couple",
@@ -94,10 +101,24 @@ const CONFIG = {
       isPortrait: true
     },
     {
+      src: "assets/photos/26.jpeg",
+      caption: "Deepon Si Roshan Aru 🪔",
+      category: "pinki",
+      description: "Diwali ki lighton ke beech, meri pyaari Aru ki khoobsurat muskan aur noor.",
+      isPortrait: true
+    },
+    {
       src: "assets/photos/pinki-1.jpg",
       caption: "Gulab Si Meri Aru 🌸",
       category: "pinki",
       description: "Khilte hue phoolon ke beech, meri sabse pyaari aur sundar Aru.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/25.jpeg",
+      caption: "Golden Hour Ki Roshni 🌅",
+      category: "pinki",
+      description: "Dhalta hua suraj aur Aru ki nashili aankhon ka jaadu — har nazar mein bepanaah pyaar.",
       isPortrait: true
     },
     {
@@ -996,6 +1017,17 @@ document.addEventListener('DOMContentLoaded', () => {
     letterOpened = true;
 
     envelopeElement.classList.add('open');
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    if (envelopeWrapper) envelopeWrapper.classList.add('open');
+    const envelopeSceneContainer = document.querySelector('.envelope-scene-container');
+    if (envelopeSceneContainer) envelopeSceneContainer.classList.add('letter-open');
+
+    // Release 3D container transforms after flap opens so position:fixed centers cleanly in viewport
+    setTimeout(() => {
+      if (envelopeWrapper) envelopeWrapper.style.perspective = 'none';
+      if (envelopeElement) envelopeElement.style.transformStyle = 'flat';
+    }, 450);
+
     particleEngine.triggerBurst(window.innerWidth / 2, window.innerHeight / 2, 35);
 
     // Sequentially reveal each paragraph of the letter
@@ -1009,10 +1041,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (openLetterBtn) {
       openLetterBtn.style.display = 'none';
     }
+
+    // Smoothly scroll down so the signature and 'Our Beautiful Story' button are fully revealed and prominent
+    const totalRevealTime = 500 + lines.length * 400 + 350;
+    setTimeout(() => {
+      const letterPaper = document.getElementById('letterPaper');
+      if (letterPaper) {
+        letterPaper.scrollTo({
+          top: letterPaper.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, totalRevealTime);
   };
 
   if (envelopeElement) envelopeElement.addEventListener('click', revealLetter);
   if (openLetterBtn) openLetterBtn.addEventListener('click', revealLetter);
+
+  // Direct scene access via query param (e.g. ?scene=letter or ?scene=letter-open)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('scene') === 'letter' || urlParams.get('scene') === 'letter-open') {
+    if (welcomeScreen) welcomeScreen.classList.add('hidden');
+    if (envelopeScreen) envelopeScreen.classList.remove('hidden');
+    if (urlParams.get('scene') === 'letter-open') {
+      setTimeout(() => {
+        revealLetter();
+      }, 200);
+    }
+  } else if (urlParams.get('scene') === 'main') {
+    if (welcomeScreen) welcomeScreen.classList.add('hidden');
+    if (envelopeScreen) envelopeScreen.classList.add('hidden');
+    if (mainWebsite) mainWebsite.classList.remove('hidden');
+  }
 
   // Transition from Letter to Main Romantic Website
   if (enterWebsiteBtn) {
