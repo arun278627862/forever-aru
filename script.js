@@ -95,9 +95,37 @@ const CONFIG = {
     },
     {
       src: "assets/photos/3-sagai-stage.jpg",
-      caption: "3. 3rd Time — Sagai Ceremony Stage 💍",
+      caption: "3. 3rd Time — Sagai Ceremony 💍",
       category: "couple",
-      description: "Sagai ke shahi pal stage par, ek doosre ke hamesha ke liye ho gaye.",
+      description: "Sagai ke shahi pal, jab hum ek doosre ke hamesha ke liye ho gaye.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/28.jpeg",
+      caption: "Teri Aankhon Ka Jaadu ✨",
+      category: "pinki",
+      description: "Aru ki pyari si muskan aur chamakti aankhon ka noor.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/29.jpeg",
+      caption: "Ek Pyara Ehsaas 💖",
+      category: "couple",
+      description: "Har pal jo tumhare saath guzarta hai, woh dil ke sabse kareeb hota hai.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/30.jpeg",
+      caption: "Meri Roshni, Meri Aru 🌹",
+      category: "pinki",
+      description: "Har ada mein khoobsurati, har muskan mein bepanaah pyaar.",
+      isPortrait: true
+    },
+    {
+      src: "assets/photos/31.jpeg",
+      caption: "Forever My Queen 👑",
+      category: "pinki",
+      description: "Aru, tum mere dil ki rani ho aur hamesha rahogi.",
       isPortrait: true
     },
     {
