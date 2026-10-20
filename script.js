@@ -1387,20 +1387,35 @@ document.addEventListener('DOMContentLoaded', () => {
   if (envelopeElement) envelopeElement.addEventListener('click', revealLetter);
   if (openLetterBtn) openLetterBtn.addEventListener('click', revealLetter);
 
-  // Direct scene access via query param (e.g. ?scene=letter or ?scene=letter-open)
+  // By default, open main website directly (no password needed)
+  if (welcomeScreen) welcomeScreen.classList.add('hidden');
+  if (envelopeScreen) envelopeScreen.classList.add('hidden');
+  if (mainWebsite) mainWebsite.classList.remove('hidden');
+
+  // Direct scene access via query param (e.g. ?scene=letter or ?scene=welcome)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('scene') === 'letter' || urlParams.get('scene') === 'letter-open') {
-    if (welcomeScreen) welcomeScreen.classList.add('hidden');
     if (envelopeScreen) envelopeScreen.classList.remove('hidden');
     if (urlParams.get('scene') === 'letter-open') {
       setTimeout(() => {
         revealLetter();
       }, 200);
     }
-  } else if (urlParams.get('scene') === 'main') {
-    if (welcomeScreen) welcomeScreen.classList.add('hidden');
-    if (envelopeScreen) envelopeScreen.classList.add('hidden');
-    if (mainWebsite) mainWebsite.classList.remove('hidden');
+  } else if (urlParams.get('scene') === 'welcome') {
+    if (welcomeScreen) welcomeScreen.classList.remove('hidden');
+  }
+
+  // Clicking the Aru Hero Portrait opens fullscreen close-look lightbox
+  const heroPortraitCard = document.querySelector('.hero-portrait-card');
+  if (heroPortraitCard) {
+    heroPortraitCard.addEventListener('click', () => {
+      const aruLandingIndex = CONFIG.GALLERY_PHOTOS.findIndex(p => p.src.includes('aru-meri-shehzadi') || p.src.includes('pinki-2') || p.src.includes('aru-landing'));
+      if (aruLandingIndex !== -1) {
+        lightbox.open(aruLandingIndex);
+      } else {
+        lightbox.open(0);
+      }
+    });
   }
 
   // Transition from Letter to Main Romantic Website

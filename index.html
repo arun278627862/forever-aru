@@ -61,9 +61,9 @@
   </aside>
 
   <!-- ========================================================================= -->
-  <!-- SCENE 1: PASSWORD-PROTECTED WELCOME SCREEN                                -->
+  <!-- SCENE 1: WELCOME SCREEN (BYPASSED FOR DIRECT LANDING ACCESS)              -->
   <!-- ========================================================================= -->
-  <section id="welcomeScreen" class="scene-overlay active" aria-labelledby="welcomeTitle">
+  <section id="welcomeScreen" class="scene-overlay hidden" aria-labelledby="welcomeTitle">
     <div class="welcome-card glass-panel animate-pop-in">
       <div class="welcome-badge">
         <span class="sparkle-icon">✨</span>
@@ -204,27 +204,48 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- MAIN CINEMATIC WEBSITE CONTAINER                                         -->
+  <!-- MAIN CINEMATIC WEBSITE CONTAINER (DIRECT OPEN, NO PASSWORD NEEDED)         -->
   <!-- ========================================================================= -->
-  <main id="mainWebsite" class="main-website-container hidden">
+  <main id="mainWebsite" class="main-website-container">
 
     <!-- HERO HEADER SECTION -->
     <header class="hero-section" id="heroSection">
       <div class="hero-bg-overlay" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="hero-badge animate-fade-down">
-          <span>Arun ❤️ Pinki</span>
+          <span>Arun ❤️ Pinki • Hamesha Ke Liye</span>
         </div>
+
+        <!-- STUNNING SINGLE ARU CLOSELOOK PORTRAIT HERO CARD -->
+        <div class="hero-portrait-card animate-pop-in">
+          <div class="hero-portrait-ring">
+            <div class="hero-portrait-glow" aria-hidden="true"></div>
+            <img 
+              src="assets/photos/aru-landing.jpg" 
+              alt="Meri Pyaari Aru - Meri Shehzadi" 
+              class="hero-portrait-img"
+              loading="eager"
+            >
+          </div>
+          <div class="hero-portrait-pill">
+            <span class="heart-pulse">👑</span>
+            <span>Meri Shehzadi Aru</span>
+          </div>
+        </div>
+
         <h1 class="hero-title font-serif">Forever Aru ❤️</h1>
         <p class="hero-quote font-script">"Aru, tum meri favourite person ho. ❤️"</p>
         <p class="hero-subtitle">Our first meeting, our memories, and our forever love.</p>
         
         <div class="hero-cta-group">
-          <a href="#counterSection" class="btn btn-secondary">
-            <span>Our Journey ⏳</span>
+          <a href="#favoriteSection" class="btn btn-gold btn-glow">
+            <span>Aru's Surprise Card 💖</span>
           </a>
           <a href="#gallerySection" class="btn btn-primary">
             <span>Photo Memories 📸</span>
+          </a>
+          <a href="#counterSection" class="btn btn-secondary">
+            <span>Our Journey ⏳</span>
           </a>
         </div>
       </div>
