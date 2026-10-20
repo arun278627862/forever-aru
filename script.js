@@ -843,6 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentTrackIdx = 0;
   let isPlaying = false;
+  let isUserPaused = false; // Flag to respect user choice: once stopped, never auto-start
 
   const updateSoundtrackBadge = (title, status) => {
     if (musicTitle && title) musicTitle.textContent = title;
@@ -870,8 +871,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const playDirectBollywoodSong = (index = currentTrackIdx) => {
+  const playDirectBollywoodSong = (index = currentTrackIdx, forcePlay = false) => {
     if (!audioEl || !CONFIG.BOLLYWOOD_PLAYLIST || !CONFIG.BOLLYWOOD_PLAYLIST.length) return;
+
+    // If user explicitly paused/stopped music, do NOT play unless forcePlay is true (user clicked play/toggle)
+    if (isUserPaused && !forcePlay) return;
 
     currentTrackIdx = index % CONFIG.BOLLYWOOD_PLAYLIST.length;
     const track = CONFIG.BOLLYWOOD_PLAYLIST[currentTrackIdx];
@@ -899,16 +903,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleMusicPlayback = () => {
     if (!audioEl) return;
     if (isPlaying && !audioEl.paused) {
+      // User explicitly stopped/paused the music
       audioEl.pause();
+      isUserPaused = true;
       setPlayingState(false);
     } else {
+      // User explicitly wants to start/resume the music
+      isUserPaused = false;
       const promise = audioEl.play();
       if (promise !== undefined) {
         promise
           .then(() => setPlayingState(true))
           .catch((err) => {
             console.log('Playback resume error:', err);
-            playDirectBollywoodSong(currentTrackIdx);
+            playDirectBollywoodSong(currentTrackIdx, true);
           });
       }
     }
@@ -921,10 +929,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Auto advance to next song when current track ends
+  // Auto advance to next song when current track ends (only if user hasn't paused)
   if (audioEl) {
     audioEl.addEventListener('ended', () => {
-      playDirectBollywoodSong(currentTrackIdx + 1);
+      if (!isUserPaused) {
+        playDirectBollywoodSong(currentTrackIdx + 1);
+      }
     });
 
     audioEl.addEventListener('play', () => {
@@ -937,38 +947,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     audioEl.addEventListener('error', (e) => {
       console.warn('Audio playback note, moving to next track:', e);
-      setTimeout(() => playDirectBollywoodSong(currentTrackIdx + 1), 1000);
+      if (!isUserPaused) {
+        setTimeout(() => playDirectBollywoodSong(currentTrackIdx + 1), 1000);
+      }
     });
   }
 
-  // Tapping the spinning heart disc skips to next Bollywood song directly
+  // Tapping the spinning heart disc skips to next Bollywood song directly (user explicitly tapped)
   if (musicDiscWrap) {
     musicDiscWrap.addEventListener('click', (e) => {
       e.stopPropagation();
+      isUserPaused = false;
       const rect = musicDiscWrap.getBoundingClientRect();
       particleEngine.triggerBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 16);
-      playDirectBollywoodSong(currentTrackIdx + 1);
+      playDirectBollywoodSong(currentTrackIdx + 1, true);
     });
 
     musicDiscWrap.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         e.stopPropagation();
-        playDirectBollywoodSong(currentTrackIdx + 1);
+        isUserPaused = false;
+        playDirectBollywoodSong(currentTrackIdx + 1, true);
       }
     });
   }
 
-  // Direct play triggers on the very first touch/click/key anywhere on the page
+  // Direct play triggers on the very first touch/click/key anywhere on the page (initial start only)
   const directPlayOnce = () => {
-    if (!isPlaying) {
+    if (!isPlaying && !isUserPaused) {
       playDirectBollywoodSong(currentTrackIdx);
     }
+    // Remove one-time auto listeners so clicks won't trigger audio later
+    document.removeEventListener('click', directPlayOnce);
+    document.removeEventListener('touchstart', directPlayOnce);
+    document.removeEventListener('keydown', directPlayOnce);
   };
 
-  document.addEventListener('click', directPlayOnce, { passive: true });
-  document.addEventListener('touchstart', directPlayOnce, { passive: true });
-  document.addEventListener('keydown', directPlayOnce, { passive: true });
+  document.addEventListener('click', directPlayOnce, { passive: true, once: true });
+  document.addEventListener('touchstart', directPlayOnce, { passive: true, once: true });
+  document.addEventListener('keydown', directPlayOnce, { passive: true, once: true });
 
   // F. Scene 1: Password Unlock Experience
   const welcomeScreen = document.getElementById('welcomeScreen');
