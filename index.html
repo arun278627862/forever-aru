@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Forever Aru ❤️ | Arun & Pinki</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="A cinematic romantic surprise gift website from Arun to his wife Pinki (lovingly called Aru). Celebrating our first meeting on 4 February 2026 and our forever love.">
+  <meta name="keywords" content="Forever Aru, Arun and Pinki, Romantic Love Story, 4 February 2026, Couple Memories">
+  <meta name="author" content="Arun">
+  <meta name="theme-color" content="#2d080e">
+  <meta property="og:title" content="Forever Aru ❤️ | Arun & Pinki">
+  <meta property="og:description" content="Yeh chhoti si duniya sirf tumhare liye hai. Made with love, by Arun.">
+  <meta property="og:image" content="assets/photos/cover.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon (Heart Icon) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+
+  <!-- Google Fonts: Highly Legible Romantic Fonts (Caveat, Lora, Playfair Display, Cinzel, Dancing Script, Outfit) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Cinzel:wght@500;600;700&family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Particle Canvas (Floating Hearts & Rose Petals) -->
+  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Glowing Vignette -->
+  <div class="ambient-vignette" aria-hidden="true"></div>
+
+  <!-- ========================================================================= -->
+  <!-- FLOATING ROMANTIC AUDIO PLAYER (DIRECT BOLLYWOOD PLAYBACK)               -->
+  <!-- ========================================================================= -->
+  <aside id="musicPlayer" class="music-player-widget direct-player playing" aria-label="Bollywood Romantic Soundtrack">
+    <div class="music-disc-wrap" id="musicDiscWrap" title="Click to skip to next Bollywood song ❤️" role="button" tabindex="0">
+      <div class="music-disc" id="musicDisc">
+        <span class="music-icon" id="musicIcon">❤️</span>
+      </div>
+      <div class="music-waves" id="musicWaves" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="music-info">
+      <span class="music-title" id="musicTitle">Raabta (Male Version) ❤️</span>
+      <span class="music-status" id="musicStatus">Arijit Singh • Agent Vinod</span>
+    </div>
+
+    <!-- Small Romantic Pause / Play Toggle Button -->
+    <button id="musicToggleBtn" class="music-toggle-btn" aria-label="Pause romantic music" title="Pause / Play">
+      <span id="musicToggleIcon">⏸️</span>
+    </button>
+
+    <!-- Direct HTML5 Audio Element for Local Downloaded Bollywood Songs -->
+    <audio id="romanticAudio" preload="auto" playsinline src="assets/music/raabta.mp3"></audio>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- SCENE 1: PASSWORD-PROTECTED WELCOME SCREEN                                -->
+  <!-- ========================================================================= -->
+  <section id="welcomeScreen" class="scene-overlay active" aria-labelledby="welcomeTitle">
+    <div class="welcome-card glass-panel animate-pop-in">
+      <div class="welcome-badge">
+        <span class="sparkle-icon">✨</span>
+        <span>A Private Gift For You</span>
+        <span class="sparkle-icon">✨</span>
+      </div>
+
+      <div class="couple-emblem" aria-hidden="true">
+        <span class="initial">A</span>
+        <span class="emblem-heart">❤️</span>
+        <span class="initial">P</span>
+      </div>
+
+      <h1 id="welcomeTitle" class="welcome-heading font-serif">Welcome, My Aru ❤️</h1>
+      <p class="welcome-subtitle">Yeh chhoti si duniya sirf tumhare liye hai.</p>
+      <p class="welcome-tagline font-script">Made with love, by Arun.</p>
+
+      <form id="passwordForm" class="password-form" onsubmit="return false;">
+        <div class="input-group">
+          <label for="passwordInput" class="sr-only">Enter Secret Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔐</span>
+            <input 
+              type="password" 
+              id="passwordInput" 
+              placeholder="Enter password (e.g. aru or 0402)" 
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" id="togglePasswordBtn" class="toggle-pwd-btn" aria-label="Show or hide password">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="unlockBtn" class="btn btn-primary btn-glow">
+          <span>Unlock My Love ❤️</span>
+        </button>
+
+        <!-- Gentle Error Message Display -->
+        <div id="passwordError" class="password-feedback" role="alert" aria-live="polite"></div>
+
+        <!-- Gentle Password Hint Helper -->
+        <div class="password-hint-box">
+          <button type="button" id="hintBtn" class="hint-toggle-btn">Need a hint? 💡</button>
+          <p id="hintText" class="hint-text hidden">Hint: Enter <strong>aru</strong> or our meeting date <strong>0402</strong> ❤️</p>
+        </div>
+      </form>
+
+      <!-- Romantic Static Security Note -->
+      <footer class="welcome-security-note">
+        <p>🔒 <em>Note:</em> A sweet romantic entrance created especially for Pinki. Client-side verified for surprise storytelling.</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SCENE 2: THE SURPRISE LETTER & ENVELOPE MODAL                            -->
+  <!-- ========================================================================= -->
+  <section id="envelopeScreen" class="scene-overlay hidden" aria-labelledby="envelopeTitle">
+    <div class="envelope-scene-container">
+      
+      <!-- Envelope Teaser Header -->
+      <div class="envelope-header animate-fade-down">
+        <span class="floating-badge">💌 For My Beloved Wife</span>
+        <h2 id="envelopeTitle" class="envelope-main-title font-serif">
+          Hey Aru, ek chhota sa surprise hai tumhare liye ❤️
+        </h2>
+        <p class="envelope-instruction">Tap the glowing envelope below to open your personal letter.</p>
+      </div>
+
+      <!-- 3D Interactive Envelope -->
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="envelopeElement" role="button" tabindex="0" aria-label="Open Love Letter Envelope">
+          <div class="envelope-back"></div>
+          
+          <!-- Handwritten Letter (Slides out) -->
+          <article class="letter-paper" id="letterPaper">
+            <div class="letter-stamp" aria-hidden="true">04.02.26</div>
+            <div class="letter-seal-watermark" aria-hidden="true">A & P</div>
+            
+            <div class="letter-content" id="letterContent">
+              <!-- Reading Font Switcher -->
+              <div class="letter-font-controls" id="letterFontControls" aria-label="Reading font options">
+                <span class="font-control-label">Reading Font:</span>
+                <div class="font-toggle-group" role="group" aria-label="Choose letter reading font">
+                  <button type="button" class="font-toggle-btn active" data-font="handwriting" aria-pressed="true" title="Natural & readable handwriting font">✍️ Handwritten</button>
+                  <button type="button" class="font-toggle-btn" data-font="serif" aria-pressed="false" title="Classic romantic book serif font">📖 Classic Book</button>
+                  <button type="button" class="font-toggle-btn" data-font="sans" aria-pressed="false" title="Modern crisp clean font">🔤 Clean Modern</button>
+                </div>
+              </div>
+
+              <!-- Dynamically rendered or structured line by line for typewriter fade-in -->
+              <div class="letter-header">
+                <p class="letter-salutation font-script">Dear Pinki, meri pyaari Aru ❤️</p>
+                <time class="letter-date" datetime="2026-02-04">4 February 2026</time>
+              </div>
+
+              <div class="letter-body font-handwriting" id="letterLines">
+                <!-- Lines injected by script.js with gentle line-by-line reveal -->
+              </div>
+
+              <div class="letter-footer">
+                <p class="letter-signoff font-script">Forever yours,</p>
+                <p class="letter-signature font-script">Arun ❤️</p>
+              </div>
+
+              <!-- Button to enter the main romantic experience -->
+              <div class="letter-actions">
+                <button type="button" id="enterWebsiteBtn" class="btn btn-gold btn-glow">
+                  <span>Our Beautiful Story ✨</span>
+                  <span class="arrow-icon">→</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Envelope Front Flaps -->
+          <div class="envelope-flap" id="envelopeFlap"></div>
+          <div class="envelope-pocket"></div>
+          
+          <!-- Wax Seal on Envelope -->
+          <div class="wax-seal" id="waxSeal">
+            <span class="seal-heart">❤️</span>
+            <span class="seal-text">A & P</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Button Below Envelope for Direct Touch/Click -->
+      <div class="envelope-action-cta">
+        <button type="button" id="openLetterBtn" class="btn btn-primary btn-pulse">
+          <span>Open Your Letter 💌</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN CINEMATIC WEBSITE CONTAINER                                         -->
+  <!-- ========================================================================= -->
+  <main id="mainWebsite" class="main-website-container hidden">
+
+    <!-- HERO HEADER SECTION -->
+    <header class="hero-section" id="heroSection">
+      <div class="hero-bg-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge animate-fade-down">
+          <span>Arun ❤️ Pinki</span>
+        </div>
+        <h1 class="hero-title font-serif">Forever Aru ❤️</h1>
+        <p class="hero-quote font-script">"Aru, tum meri favourite person ho. ❤️"</p>
+        <p class="hero-subtitle">Our first meeting, our memories, and our forever love.</p>
+        
+        <div class="hero-cta-group">
+          <a href="#counterSection" class="btn btn-secondary">
+            <span>Our Journey ⏳</span>
+          </a>
+          <a href="#gallerySection" class="btn btn-primary">
+            <span>Photo Memories 📸</span>
+          </a>
+        </div>
+      </div>
+      <div class="scroll-down-indicator" aria-hidden="true">
+        <span>Scroll Down</span>
+        <div class="mouse-icon"><div class="mouse-wheel"></div></div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: LIVE DAYS-TOGETHER COUNTER -->
+    <section class="romantic-section counter-section" id="counterSection">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-pill">Our Time Together</span>
+          <h2 class="section-title font-serif">Har Din, Ek Nayi Memory ❤️</h2>
+          <p class="section-subtitle">Every day is another chance to make a beautiful memory together.</p>
+        </div>
+
+        <div class="counter-card glass-panel">
+          <div class="counter-intro">
+            <span class="calendar-icon">🗓️</span>
+            <p>Time since our first meeting on <strong class="highlight-date">04 February 2026</strong>:</p>
+          </div>
+
+          <div class="timer-grid" id="timerGrid" role="timer" aria-live="off">
+            <div class="timer-unit">
+              <div class="timer-box">
+                <span class="timer-num" id="daysCount">00</span>
+              </div>
+              <span class="timer-label">Days</span>
+            </div>
+            <div class="timer-separator">:</div>
+            <div class="timer-unit">
+              <div class="timer-box">
+                <span class="timer-num" id="hoursCount">00</span>
+              </div>
+              <span class="timer-label">Hours</span>
+            </div>
+            <div class="timer-separator">:</div>
+            <div class="timer-unit">
+              <div class="timer-box">
+                <span class="timer-num" id="minutesCount">00</span>
+              </div>
+              <span class="timer-label">Minutes</span>
+            </div>
+            <div class="timer-separator">:</div>
+            <div class="timer-unit">
+              <div class="timer-box">
+                <span class="timer-num" id="secondsCount">00</span>
+              </div>
+              <span class="timer-label">Seconds</span>
+            </div>
+          </div>
+
+          <div class="counter-footer">
+            <p class="counter-moment-quote font-script">"Aur har ek second tumhare saath aur bhi special lagta hai."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: OUR FIRST MEETING — 4 FEBRUARY 2026 -->
+    <section class="romantic-section story-section" id="storySection">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-pill">Where Love Began</span>
+          <h2 class="section-title font-serif">Our Story Begins ❤️</h2>
+        </div>
+
+        <!-- Featured First Meeting Spotlight Card -->
+        <div class="story-spotlight-card glass-panel">
+          <div class="spotlight-date-badge">
+            <span class="badge-icon">💖</span>
+            <span class="badge-date">04 February 2026</span>
+          </div>
+
+          <div class="spotlight-body">
+            <div class="spotlight-image-wrap">
+              <img 
+                src="assets/photos/first-meeting-4feb.jpg" 
+                alt="Our First Meeting Memory on 04 February 2026 - Arun and Pinki" 
+                class="spotlight-img"
+                loading="eager"
+              >
+              <div class="spotlight-frame-deco" aria-hidden="true"></div>
+            </div>
+
+            <div class="spotlight-texts">
+              <h3 class="spotlight-title font-serif">The Day Everything Changed</h3>
+              
+              <blockquote class="hindi-quote font-serif">
+                "Yeh woh din tha jab hum pehli baar mile. Ek chhoti si mulaqat, jo hamari story ki ek special memory ban gayi."
+              </blockquote>
+
+              <blockquote class="english-quote">
+                "Every beautiful story has a beginning. This is where our first-meeting memory starts."
+              </blockquote>
+
+              <div class="spotlight-tag">
+                <span class="tag-heart">❤️</span>
+                <span>Arun & Pinki • First Chapter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cinematic Journey Timeline -->
+        <div class="timeline-container">
+          <div class="timeline-line" aria-hidden="true"></div>
+          
+          <!-- Event 1: First Meeting -->
+          <div class="timeline-item timeline-highlight">
+            <div class="timeline-dot"><span class="dot-inner">❤️</span></div>
+            <div class="timeline-card glass-panel">
+              <span class="timeline-date">04 February 2026</span>
+              <h4 class="timeline-title font-serif">Our First Meeting</h4>
+              <p class="timeline-desc">
+                Woh pehla pal, woh pehli mulaqat... jahan se hamari yeh khubsoorat kahani shuru hui.
+              </p>
+            </div>
+          </div>
+
+          <!-- Event 2: Placeholder for special memories -->
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="dot-inner">✨</span></div>
+            <div class="timeline-card glass-panel">
+              <span class="timeline-date">Beautiful Memory</span>
+              <h4 class="timeline-title font-serif">Every Conversation & Smile</h4>
+              <p class="timeline-desc">
+                Tumse baat karna, tumhari hasi sunna, aur har din ek doosre ko aur behtar samajhna.
+              </p>
+            </div>
+          </div>
+
+          <!-- Event 3: Today & Always -->
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="dot-inner">🌹</span></div>
+            <div class="timeline-card glass-panel">
+              <span class="timeline-date">Forever & Always</span>
+              <h4 class="timeline-title font-serif">Creating New Moments</h4>
+              <p class="timeline-desc">
+                Saath milkar har naye din ko aur bhi yaadgaar banana aur ek doosre ka hamesha saath nibhana.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: SURPRISE MESSAGE GENERATOR -->
+    <section class="romantic-section surprise-section" id="surpriseSection">
+      <div class="section-container">
+        <div class="surprise-box glass-panel text-center">
+          <div class="surprise-icon-badge" aria-hidden="true">💌</div>
+          <span class="section-pill">A Little Love For Pinki</span>
+          <h2 class="section-title font-serif">Tap for a Little Surprise 💖</h2>
+          <p class="section-subtitle">Whenever you smile, the whole world looks brighter, Aru.</p>
+
+          <div class="message-display-box" id="messageDisplayBox">
+            <span class="quote-mark left">“</span>
+            <p id="surpriseMessageText" class="surprise-message font-serif">
+              Aru, tum meri favourite person ho. ❤️
+            </p>
+            <span class="quote-mark right">”</span>
+          </div>
+
+          <div class="surprise-controls">
+            <button type="button" id="nextSurpriseBtn" class="btn btn-primary btn-glow btn-bounce">
+              <span>Tap for Another Surprise 💖</span>
+            </button>
+            <p id="surpriseCounterText" class="surprise-counter-text">Message 1 of 7</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: OUR PHOTO GALLERY (POLAROID MASONRY) -->
+    <section class="romantic-section gallery-section" id="gallerySection">
+      <div class="section-container">
+        <div class="section-header text-center">
+          <span class="section-pill">Our Scrapbook</span>
+          <h2 class="section-title font-serif">Captured Moments & Smiles 📸</h2>
+          <p class="section-subtitle">Every photograph tells a chapter of our bond, Pinki.</p>
+
+          <!-- Filter Navigation Tabs -->
+          <div class="gallery-filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Memories</button>
+            <button class="filter-tab" data-filter="pinki" role="tab" aria-selected="false">My Aru 🌸</button>
+            <button class="filter-tab" data-filter="couple" role="tab" aria-selected="false">Arun ❤️ Pinki</button>
+            <button class="filter-tab" data-filter="family" role="tab" aria-selected="false">Celebrations ✨</button>
+          </div>
+        </div>
+
+        <!-- Polaroid Masonry Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Dynamically populated from CONFIG.GALLERY_PHOTOS in script.js -->
+        </div>
+
+        <div class="gallery-note text-center">
+          <p class="gallery-hint">
+            💡 <em>Tip:</em> Tap any photo to view full size, swipe through memories, or read captions!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULLSCREEN LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="lightbox-modal hidden" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+      <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+      
+      <div class="lightbox-content">
+        <button type="button" class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Close Lightbox">✕</button>
+        
+        <button type="button" class="lightbox-nav-btn prev" id="lightboxPrevBtn" aria-label="Previous Photo">❮</button>
+        <button type="button" class="lightbox-nav-btn next" id="lightboxNextBtn" aria-label="Next Photo">❯</button>
+
+        <div class="lightbox-image-wrap">
+          <img id="lightboxImg" src="" alt="Enlarged photo memory" class="lightbox-img">
+        </div>
+
+        <div class="lightbox-caption-bar">
+          <div class="lightbox-info">
+            <h3 id="lightboxCaption" class="lightbox-caption-text font-serif">Caption</h3>
+            <p id="lightboxDescription" class="lightbox-desc-text"></p>
+          </div>
+          <span id="lightboxCounter" class="lightbox-counter">1 / 6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: FINAL ROMANTIC SCENE -->
+    <section class="romantic-section finale-section" id="finaleSection">
+      <div class="finale-bg-overlay" aria-hidden="true"></div>
+      <div class="section-container text-center">
+        
+        <div class="finale-card glass-panel">
+          <div class="finale-heart-pulse" aria-hidden="true">
+            <span class="heart-symbol">❤️</span>
+          </div>
+
+          <h2 class="finale-names font-serif">ARUN ❤️ PINKI</h2>
+          <p class="finale-dedication font-script">My Aru, My Pinki, My Forever.</p>
+
+          <div class="finale-quotes">
+            <blockquote class="finale-hindi font-serif">
+              "Kal bhi tum, aaj bhi tum, aur meri har beautiful memory mein tum. ❤️"
+            </blockquote>
+            <blockquote class="finale-english font-serif">
+              "Today, tomorrow, and every new memory — I choose you."
+            </blockquote>
+          </div>
+
+          <div class="finale-signature-wrap">
+            <p class="finale-signature font-script">Made with all my love, Arun.</p>
+            <div class="infinity-badge" aria-hidden="true">♾️ Forever & Always</div>
+          </div>
+
+          <!-- Relive Button -->
+          <div class="finale-actions">
+            <button type="button" id="reliveBtn" class="btn btn-gold btn-glow">
+              <span>Relive Our Story ↻</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer text-center">
+      <div class="footer-container">
+        <p class="footer-love font-script">
+          Forever Aru • Dedicated with unconditional love to Pinki ❤️
+        </p>
+        <p class="footer-sub">
+          04 February 2026 — To Infinity and Beyond
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Main JavaScript Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
