@@ -67,42 +67,42 @@ const CONFIG = {
       title: "Tujh Mein Rab Dikhta Hai ❤️",
       artist: "Roop Kumar Rathod • RNBDJ",
       src: "assets/music/tujh-mein-rab.mp3",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     },
     {
       title: "Mere Rang Mein Rangne Wali ❤️",
       artist: "S.P. Balasubrahmanyam • Maine Pyar Kiya",
       src: "assets/music/mere-rang-mein-rangne-wali.webm",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     },
     {
       title: "Hum Tum Kitne Paas Hai ❤️",
       artist: "Udit Narayan & Alka Yagnik",
       src: "assets/music/hum-tum-kitne-paas.webm",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     },
     {
       title: "Raabta (Male Version) ❤️",
       artist: "Arijit Singh • Agent Vinod",
       src: "assets/music/raabta.mp3",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     },
     {
       title: "Tum Hi Ho ❤️",
       artist: "Arijit Singh • Aashiqui 2",
       src: "assets/music/romantic.mp3",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     },
     {
       title: "Raataan Lambiyan ❤️",
       artist: "Jubin Nautiyal & Asees Kaur • Shershaah",
       src: "assets/music/raataan-lambiyan.mp3",
-      startTime: 0,
+      startTime: 38,
       durationLimit: 120
     }
   ],
