@@ -69,6 +69,12 @@ const CONFIG = {
       startTime: 0
     },
     {
+      title: "Mere Rang Mein Rangne Wali ❤️",
+      artist: "S.P. Balasubrahmanyam • Maine Pyar Kiya",
+      src: "assets/music/mere-rang-mein-rangne-wali.webm",
+      startTime: 0
+    },
+    {
       title: "Hum Tum Kitne Paas Hai ❤️",
       artist: "Udit Narayan & Alka Yagnik",
       src: "assets/music/hum-tum-kitne-paas.webm",
